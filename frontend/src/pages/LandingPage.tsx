@@ -11,7 +11,7 @@ const LandingPage = () => {
   return (
     <AuthLayout>
       <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8 bg-dark-background text-dark-foreground animate-fade-in"> {/* Added fade-in animation */}
-        <div className="w-full max-w-7x6 mx-auto space-y-24 py-16"> {/* Increased vertical spacing */}
+        <div className="w-full max-w-7xl mx-auto space-y-24 py-16"> {/* Increased vertical spacing */}
           {/* Hero Section */}
           <HeroAuthCard
             title="MealPlanner: Smart Meals, Smarter Savings"
