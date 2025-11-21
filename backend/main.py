@@ -23,7 +23,12 @@ async def lifespan(app: FastAPI):
     close_mongo_connection()
 
 
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(
+    lifespan=lifespan,
+    title="Meal Planner API",
+    description="API for managing meal plans, shopping lists, and user authentication.",
+    version="1.0.0",
+)
 
 # CORS Configuration
 origins = os.getenv(
