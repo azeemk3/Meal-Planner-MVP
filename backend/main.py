@@ -13,10 +13,12 @@ load_dotenv()
 
 app = FastAPI()
 
-# CORS: DEV-FRIENDLY, SINGLE CONFIG
+# CORS Configuration
+origins = os.getenv("CORS_ORIGINS", "https://meal-planner-mvp.onrender.com,http://localhost:5137,http://127.0.0.1:5137,http://localhost:5173,http://127.0.0.1:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
