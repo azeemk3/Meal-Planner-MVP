@@ -1,10 +1,10 @@
 import { UserProfile } from "@/types";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL || "http://127.0.0.1:8000";
 
 export const api = {
   signup: async (userData: any) => {
-    const response = await fetch(`${API_URL}/api/v1/auth/signup`, {
+    const response = await fetch(`${API_URL}/auth/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,7 +20,7 @@ export const api = {
   },
 
   login: async (credentials: any) => {
-    const response = await fetch(`${API_URL}/api/v1/auth/login`, {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const api = {
       return null;
     }
 
-    const response = await fetch(`${API_URL}/api/v1/user/me`, {
+    const response = await fetch(`${API_URL}/user/me`, {
       method: "POST", // <-- staying POST
       headers: {
         "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const api = {
   },
 
   getUserProfile: async (token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/user/profile`, {
+    const response = await fetch(`${API_URL}/user/profile`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export const api = {
   },
 
   saveUserProfile: async (profileData: any, token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/user/profile`, {
+    const response = await fetch(`${API_URL}/user/profile`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export const api = {
   },
 
   generateMealPlan: async (token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/generate-meal-plan`, {
+    const response = await fetch(`${API_URL}/generate-meal-plan`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -122,7 +122,7 @@ export const api = {
   },
 
   getCurrentMealPlan: async (token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/meal-plan/current`, {
+    const response = await fetch(`${API_URL}/meal-plan/current`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -138,7 +138,7 @@ export const api = {
 
   // you told backend to keep recipes as POST, so leaving this as POST
   getRecipeDetails: async (recipeId: string, token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/recipes/${recipeId}`, {
+    const response = await fetch(`${API_URL}/recipes/${recipeId}`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -153,7 +153,7 @@ export const api = {
   },
 
   getLeftoverSuggestions: async (userProfile: any, token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/leftover-suggestions`, {
+    const response = await fetch(`${API_URL}/leftover-suggestions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -171,7 +171,7 @@ export const api = {
 
   // also left as POST since that's what you set on backend
   getCommunityRecipes: async (token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/community-recipes`, {
+    const response = await fetch(`${API_URL}/community-recipes`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -187,7 +187,7 @@ export const api = {
 
   // keep as POST if your backend expects a full mealPlan body
   getShoppingList: async (mealPlan: any, token: string) => {
-    const response = await fetch(`${API_URL}/api/v1/shopping-list`, {
+    const response = await fetch(`${API_URL}/shopping-list`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

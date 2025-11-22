@@ -18,8 +18,10 @@ class PyObjectId(ObjectId):
         return ObjectId(v)
 
     @classmethod
-    def __get_pydantic_json_schema__(cls, field_schema: dict) -> None:
+    def __get_pydantic_json_schema__(cls, core_schema, handler):
+        field_schema = handler(core_schema)
         field_schema.update(type="string")
+        return field_schema
 
 
 class User(BaseModel):
