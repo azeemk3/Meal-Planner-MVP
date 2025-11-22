@@ -1,17 +1,9 @@
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo.errors import ServerSelectionTimeoutError
 from typing import Optional
-import os
-from dotenv import load_dotenv
+from decouple import config
 
-load_dotenv()
-
-MONGODB_URI = os.getenv("MONGODB_URI")
-if not MONGODB_URI:
-    raise ValueError(
-        "MONGODB_URI not found in environment. "
-        "Create a .env file (see .env.example) or export the variable."
-    )
+MONGODB_URI = config("MONGODB_URI")
 
 
 class DataBase:

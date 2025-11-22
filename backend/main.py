@@ -3,7 +3,7 @@ import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from dotenv import load_dotenv
+from decouple import config, Csv
 from app.db import connect_to_mongo, close_mongo_connection, db
 from app.routes import auth as auth_router
 from app.routes import user as user_router
@@ -11,8 +11,6 @@ from app.routes import meal_plan as meal_plan_router
 from app.routes import static as static_router
 from app.routes import shopping_list as shopping_list_router
 import uvicorn
-
-load_dotenv()
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -41,14 +39,11 @@ app = FastAPI(
 )
 
 # CORS Configuration
-origins = os.getenv(
-    "CORS_ORIGINS",
-    "https://meal-planner-mvp.onrender.com,http://localhost:5137,http://127.0.0.1:5137,http://localhost:5173,http://127.0.0.1:5173"
-).split(",")
+origins = config("CORS_ORIGINS", default="http://localhost:5173,http://127.0.0.1:5173", cast=Csv())
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://meal-planner-mvp.onrender.com,http://localhost:5137,http://127.0.0.1:5137,http://localhost:5173,http://127.0.0.1:5173"],
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -81,7 +76,7 @@ def main():
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=int(os.getenv("PORT", 8000)),
+        port=config("PORT", default=8000, cast=int),
         reload=True
     )
 
