@@ -1,4 +1,5 @@
 import os
+import logging
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,14 +14,23 @@ import uvicorn
 
 load_dotenv()
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Connect to MongoDB
-    await connect_to_mongo()
-    yield
-    # Close MongoDB connection
-    close_mongo_connection()
+    try:
+        await connect_to_mongo()
+        yield
+    except Exception as e:
+        logger.error(f"Error during application lifespan: {e}")
+        raise
+    finally:
+        # Close MongoDB connection
+        close_mongo_connection()
 
 
 app = FastAPI(
@@ -38,7 +48,7 @@ origins = os.getenv(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=["https://meal-planner-mvp.onrender.com,http://localhost:5137,http://127.0.0.1:5137,http://localhost:5173,http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
